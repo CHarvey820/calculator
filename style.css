@@ -1,0 +1,93 @@
+/* CSS reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Orbitron", sans-serif;
+  font-weight: bold;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: rgba(145, 107, 180, 0.219);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+  gap: 0.2rem;
+  background-color: rgb(61, 16, 104);
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+.calcScreen {
+  background-color: aliceblue;
+  padding: 1rem;
+  width: 100%;
+  height: 100px;
+  text-align: end;
+  margin-bottom: 0.5rem;
+  border-radius: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.result {
+  font-size: 2rem;
+  height: 80%;
+  justify-content: flex-end;
+  text-align: end;
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 0.25rem;
+}
+
+.calcRow {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 0 0.25rem;
+}
+
+.calcBtn {
+  background-color: aliceblue;
+  padding: 2rem;
+  width: 100px;
+  text-align: center;
+  border-radius: 0.25rem;
+  height: auto;
+}
+
+.longBtn {
+  width: 233px;
+}
+
+.operator {
+  background-color: rgb(118, 185, 243);
+}
+
+.func {
+  background-color: rgb(187, 128, 182);
+}
+
+.btnTxt {
+  user-select: none;
+}
