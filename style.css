@@ -74,6 +74,11 @@ main {
   text-align: center;
   border-radius: 0.25rem;
   height: auto;
+  font-size: 1.2rem;
+}
+
+.func{
+  max-width: 89px;
 }
 
 .longBtn {
