@@ -1,6 +1,7 @@
 const OPERATORS = "+-*/^~";
 
 let theOperationArray = [];
+let thePreviousOperation = [];
 let theAccumulatorValue = "";
 
 // ------------------ BASIC FUNCTIONS --------------------------------
@@ -56,8 +57,16 @@ function divide(num1, num2) {
  * @returns {any}
  */
 function clear() {
-  theOperationArray = "";
+  theOperationArray = [];
   theAccumulatorValue = "";
+}
+
+/**
+ * Clears only theOperationArray
+ * @returns {any}
+ */
+function clearOperationArray() {
+  theOperationArray = [];
 }
 
 /**
@@ -65,7 +74,7 @@ function clear() {
  * @param {any} value
  * @returns {any}
  */
-function adToOperationArray(value) {
+function addToOperationArray(value) {
   //TODO: check if last value is an operator, and update operator instead of pushing new
   theOperationArray.push(value);
 }
@@ -76,6 +85,7 @@ function adToOperationArray(value) {
  * @returns {any}
  */
 function operate(operationArray) {
+  console.log("Prev Op: " + thePreviousOperation);
   //split the number values and the operator
   let operator = "";
 
@@ -86,40 +96,86 @@ function operate(operationArray) {
   });
   console.log(operator);
 
-  const operatorIndex = operationArray.indexOf(operator);
+  let operatorIndex = "";
 
-  const num1 = Number(operationArray.slice(0, operatorIndex).join(""));
+  let num1 = "";
   let num2 = "";
 
+  //checks if the calculation is a continuation of the previous one, uses saved theAccumulatorValue to perform next operation
+  if (theAccumulatorValue !== "" && operationArray.indexOf(operator) === 0) {
+    console.log("case: continuation");
+    num1 = theAccumulatorValue;
+  } else {
+    console.log("case: fresh calc");
+    operatorIndex = operationArray.indexOf(operator);
+    num1 = Number(operationArray.slice(0, operatorIndex).join(""));
+  }
+
+  // checks if operation is square or changeSign, which only require one parameter
   if (operator !== "^" && operator !== "~") {
     num2 = Number(
       operationArray.slice(operatorIndex + 1, operationArray.length).join("")
     );
   }
 
+  //if theOparray is empty, meaning the user presses = again immediately, perform (non empty) previousOperation on accum
+  if (operationArray.length === 0 && thePreviousOperation.length !== 0) {
+    console.log("case: perform same op");
+    thePreviousOperation.forEach((value) => {
+      if (OPERATORS.includes(value)) {
+        operator = value;
+      }
+    });
+
+    operatorIndex = thePreviousOperation.indexOf(operator);
+    console.log("index " + operatorIndex);
+    num1 = theAccumulatorValue;
+    num2 = Number(
+      thePreviousOperation
+        .slice(operatorIndex + 1, thePreviousOperation.length)
+        .join("")
+    );
+
+    if (operator !== "^" && operator !== "~") {
+      num2 = Number(
+        thePreviousOperation
+          .slice(operatorIndex + 1, thePreviousOperation.length)
+          .join("")
+      );
+    }
+  }
+
   console.log(num1 + " " + num2);
 
   if (operator === "+") {
-    return add(num1, num2);
+    theAccumulatorValue = add(num1, num2);
   } else if (operator === "-") {
-    return subtract(num1, num2);
+    theAccumulatorValue = subtract(num1, num2);
   } else if (operator === "*") {
-    return multiply(num1, num2);
+    theAccumulatorValue = multiply(num1, num2);
   } else if (operator === "/") {
-    return divide(num1, num2);
+    theAccumulatorValue = divide(num1, num2);
   } else if (operator === "^") {
-    return square(num1);
+    theAccumulatorValue = square(num1);
   } else if (operator === "~") {
-    return changeSign(num1);
+    theAccumulatorValue = changeSign(num1);
   }
+  thePreviousOperation = operationArray;
+  clearOperationArray();
+  return theAccumulatorValue;
 
-  // TODO
-  //if accumulator = "", then use two given values, if not, use accumulator value.
-  //check if last key press was = or an operator, then submit the same "operator num2" function on the accumulator value
+  // TODO:
+  //clear up operationarray values redundancy & see if "fresh calc" case can be skipped on "same op" cond.
 }
 
-const operationTestArray = [3, 0, "+", 0];
+const operationTestArray = [6, 0, "+", 3];
 console.log(operate(operationTestArray));
+const operationTestArray2 = [2, "*", 2];
+console.log(operate(operationTestArray2));
+const operationTestArray3 = ["-", 1];
+console.log(operate(operationTestArray3));
+const operationTestArray4 = [];
+console.log(operate(operationTestArray4));
 // console.log(operate("3+"));
 
 // ----------------- EXTRA FUNCTIONS ------------------------------------
