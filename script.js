@@ -4,6 +4,45 @@ let theOperationArray = [];
 let thePreviousOperation = [];
 let theAccumulatorValue = "";
 
+const btnNum0 = document.querySelector("#btn0");
+const btnNum1 = document.querySelector("#btn1");
+const btnNum2 = document.querySelector("#btn2");
+const btnNum3 = document.querySelector("#btn3");
+const btnNum4 = document.querySelector("#btn4");
+const btnNum5 = document.querySelector("#btn5");
+const btnNum6 = document.querySelector("#btn6");
+const btnNum7 = document.querySelector("#btn7");
+const btnNum8 = document.querySelector("#btn8");
+const btnNum9 = document.querySelector("#btn9");
+const btnAdd = document.querySelector("#btnPlus");
+const btnSubtract = document.querySelector("#btnMinus");
+const btnMultiply = document.querySelector("#btnMultiply");
+const btnDivide = document.querySelector("#btnDivide");
+let txtOperationDisplay = document.querySelector("#operationDisplay");
+let txtResult = document.querySelector("#result");
+
+const allCalcBtns = document.querySelectorAll(".calcBtn");
+
+Array.from(allCalcBtns).forEach((btn) => {
+  btn.addEventListener("click", () => {
+    console.log(`clicked ${btn.innerText}`);
+    if (btn.innerText === "+/-") {
+      addToOperationArray("~");
+      operate(theOperationArray);
+    } else if (btn.innerText === "x2") {
+      addToOperationArray("^");
+      operate(theOperationArray);
+    } else if (btn.innerText === "=") {
+      operate(theOperationArray);
+    } else if (btn.innerText === "CE") {
+      clear();
+    } else {
+      addToOperationArray(btn.innerText);
+    }
+  });
+});
+
+// ----------------------------------------------------CALCULATOR OPERATIONS--------------------------------------------------------------------------------------------------------
 // ------------------ BASIC FUNCTIONS --------------------------------
 
 /**
@@ -59,6 +98,8 @@ function divide(num1, num2) {
 function clear() {
   theOperationArray = [];
   theAccumulatorValue = "";
+  txtOperationDisplay.innerHTML = " ";
+  txtResult.innerText = " ";
 }
 
 /**
@@ -75,8 +116,15 @@ function clearOperationArray() {
  * @returns {any}
  */
 function addToOperationArray(value) {
-  //TODO: check if last value is an operator, and update operator instead of pushing new
+  //TODO: check if last value is an operator, and update operator instead of pushing new.
+  // check if the user is stringing a larger operation before hitting equal
   theOperationArray.push(value);
+
+  if (!(value === "~")) {
+    txtOperationDisplay.innerHTML += value + " ";
+  }
+
+  console.log(theOperationArray);
 }
 
 /**
@@ -162,20 +210,22 @@ function operate(operationArray) {
   }
   thePreviousOperation = operationArray;
   clearOperationArray();
+  console.log(theAccumulatorValue);
+  txtResult.innerHTML = theAccumulatorValue;
   return theAccumulatorValue;
 
   // TODO:
   //clear up operationarray values redundancy & see if "fresh calc" case can be skipped on "same op" cond.
 }
 
-const operationTestArray = [6, 0, "+", 3];
-console.log(operate(operationTestArray));
-const operationTestArray2 = [2, "*", 2];
-console.log(operate(operationTestArray2));
-const operationTestArray3 = ["-", 1];
-console.log(operate(operationTestArray3));
-const operationTestArray4 = [];
-console.log(operate(operationTestArray4));
+// const operationTestArray = [6, 0, "+", 3];
+// console.log(operate(operationTestArray));
+// const operationTestArray2 = [2, "*", 2];
+// console.log(operate(operationTestArray2));
+// const operationTestArray3 = ["-", 1];
+// console.log(operate(operationTestArray3));
+// const operationTestArray4 = [];
+// console.log(operate(operationTestArray4));
 // console.log(operate("3+"));
 
 // ----------------- EXTRA FUNCTIONS ------------------------------------

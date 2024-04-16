@@ -20,40 +20,40 @@
     <main>
       <div class="container">
         <div class="calcScreen">
-          <span class="operationString">x + x</span>
-          <span class="result">y</span>
+          <span id="operationDisplay"> </span>
+          <span id="result">0</span>
         </div>
         <div class="rows">
           <div class="calcRow">
-            <div class="calcBtn func"><span class="btnTxt">CE</span></div>
-            <div class="calcBtn func"><span class="btnTxt">+/-</span></div>
-            <div class="calcBtn func">
+            <div class="calcBtn func" id="btnCE"><span class="btnTxt">CE</span></div>
+            <div class="calcBtn func" id="btnChangeSign"><span class="btnTxt">+/-</span></div>
+            <div class="calcBtn func" id="btnSquare">
               <span class="btnTxt">x<sup>2</sup></span>
             </div>
-            <div class="calcBtn operator"><span class="btnTxt">/</span></div>
+            <div class="calcBtn operator" id="btnDivide"><span class="btnTxt">/</span></div>
           </div>
           <div class="calcRow">
-            <div class="calcBtn"><span class="btnTxt">7</span></div>
-            <div class="calcBtn"><span class="btnTxt">8</span></div>
-            <div class="calcBtn"><span class="btnTxt">9</span></div>
-            <div class="calcBtn operator"><span class="btnTxt">X</span></div>
+            <div class="calcBtn" id="btn7"><span class="btnTxt">7</span></div>
+            <div class="calcBtn" id="btn8"><span class="btnTxt">8</span></div>
+            <div class="calcBtn" id="btn9"><span class="btnTxt">9</span></div>
+            <div class="calcBtn operator" id="btnMultiply"><span class="btnTxt">*</span></div>
           </div>
           <div class="calcRow">
-            <div class="calcBtn"><span class="btnTxt">4</span></div>
-            <div class="calcBtn"><span class="btnTxt">5</span></div>
-            <div class="calcBtn"><span class="btnTxt">6</span></div>
-            <div class="calcBtn operator"><span class="btnTxt">-</span></div>
+            <div class="calcBtn" id="btn4"><span class="btnTxt">4</span></div>
+            <div class="calcBtn" id="btn5"><span class="btnTxt">5</span></div>
+            <div class="calcBtn" id="btn6"><span class="btnTxt">6</span></div>
+            <div class="calcBtn operator" id="btnMinus"><span class="btnTxt">-</span></div>
           </div>
           <div class="calcRow">
-            <div class="calcBtn"><span class="btnTxt">1</span></div>
-            <div class="calcBtn"><span class="btnTxt">2</span></div>
-            <div class="calcBtn"><span class="btnTxt">3</span></div>
-            <div class="calcBtn operator"><span class="btnTxt">+</span></div>
+            <div class="calcBtn" id="btn1"><span class="btnTxt">1</span></div>
+            <div class="calcBtn" id="btn2"><span class="btnTxt">2</span></div>
+            <div class="calcBtn" id="btn3"><span class="btnTxt">3</span></div>
+            <div class="calcBtn operator" id="btnPlus"><span class="btnTxt">+</span></div>
           </div>
           <div class="calcRow">
-            <div class="calcBtn longBtn"><span class="btnTxt">0</span></div>
-            <div class="calcBtn"><span class="btnTxt">.</span></div>
-            <div class="calcBtn operator"><span class="btnTxt">=</span></div>
+            <div class="calcBtn longBtn" id="btn0"><span class="btnTxt">0</span></div>
+            <div class="calcBtn" id="btnDecimal"><span class="btnTxt">.</span></div>
+            <div class="calcBtn operator" id="btnEquals"><span class="btnTxt">=</span></div>
           </div>
         </div>
       </div>
