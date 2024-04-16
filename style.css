@@ -86,6 +86,16 @@ main {
   font-size: 1.2rem;
 }
 
+.decimalClicked{
+  background-color: rgb(196, 196, 196);
+  pointer-events: none;
+}
+
+.decimalDefault{
+  background-color: aliceblue;
+  pointer-events: all;
+}
+
 .func{
   max-width: 89px;
 }

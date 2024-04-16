@@ -3,21 +3,9 @@ const OPERATORS = "+-*/^~";
 let theOperationArray = [];
 let thePreviousOperation = [];
 let theAccumulatorValue = "";
+let isOperatorInArray = false;
 
-const btnNum0 = document.querySelector("#btn0");
-const btnNum1 = document.querySelector("#btn1");
-const btnNum2 = document.querySelector("#btn2");
-const btnNum3 = document.querySelector("#btn3");
-const btnNum4 = document.querySelector("#btn4");
-const btnNum5 = document.querySelector("#btn5");
-const btnNum6 = document.querySelector("#btn6");
-const btnNum7 = document.querySelector("#btn7");
-const btnNum8 = document.querySelector("#btn8");
-const btnNum9 = document.querySelector("#btn9");
-const btnAdd = document.querySelector("#btnPlus");
-const btnSubtract = document.querySelector("#btnMinus");
-const btnMultiply = document.querySelector("#btnMultiply");
-const btnDivide = document.querySelector("#btnDivide");
+const btnDecimal = document.querySelector("#btnDecimal");
 let txtOperationDisplay = document.querySelector("#operationDisplay");
 let txtResult = document.querySelector("#result");
 
@@ -96,10 +84,10 @@ function divide(num1, num2) {
  * @returns {any}
  */
 function clear() {
-  theOperationArray = [];
+  clearOperationArray();
   theAccumulatorValue = "";
   txtOperationDisplay.innerHTML = " ";
-  txtResult.innerText = " ";
+  txtResult.innerHTML = " ";
 }
 
 /**
@@ -108,6 +96,9 @@ function clear() {
  */
 function clearOperationArray() {
   theOperationArray = [];
+  isOperatorInArray = false;
+  btnDecimal.classList.remove("decimalClicked");
+  btnDecimal.classList.add("decimalDefault");
 }
 
 /**
@@ -116,24 +107,50 @@ function clearOperationArray() {
  * @returns {any}
  */
 function addToOperationArray(value) {
-  //TODO: check if last value is an operator, and update operator instead of pushing new.
   // check if the user is stringing a larger operation before hitting equal
+  if (
+    isOperatorInArray === true &&
+    theOperationArray.length > 0 &&
+    OPERATORS.includes(value)
+  ) {
+    operate(theOperationArray);
+  }
+
   theOperationArray.push(value);
 
+  if (OPERATORS.includes(value)) {
+    isOperatorInArray = true;
+  } else if (value === ".") {
+    btnDecimal.classList.add("decimalClicked");
+    btnDecimal.classList.remove("decimalDefault");
+  }
+
+  // do not display sign change operator, user can see the sign change in result window
   if (!(value === "~")) {
     txtOperationDisplay.innerHTML += value + " ";
   }
 
   console.log(theOperationArray);
+  console.log(isOperatorInArray);
 }
 
-/**
+/**--------------------------------------------------OPERATE-------------------------------------------------------------------------------
  * Complete the calculator operation based on the values passed by user actions from the operationArray
  * @param {any} operationArray
  * @returns {any}
  */
 function operate(operationArray) {
   console.log("Prev Op: " + thePreviousOperation);
+
+  // if the user hits equals before an operator, just save full entered number
+  if (isOperatorInArray === false) {
+    theAccumulatorValue = Number(operationArray.join(""));
+    clearOperationArray();
+    console.log(theAccumulatorValue);
+    txtResult.innerHTML = theAccumulatorValue;
+    return theAccumulatorValue;
+  }
+
   //split the number values and the operator
   let operator = "";
 
@@ -216,17 +233,9 @@ function operate(operationArray) {
 
   // TODO:
   //clear up operationarray values redundancy & see if "fresh calc" case can be skipped on "same op" cond.
+  //number resets when = is pressed multiple times in a row
+  //accumulator is not used when adding a decimal after performing an operation
 }
-
-// const operationTestArray = [6, 0, "+", 3];
-// console.log(operate(operationTestArray));
-// const operationTestArray2 = [2, "*", 2];
-// console.log(operate(operationTestArray2));
-// const operationTestArray3 = ["-", 1];
-// console.log(operate(operationTestArray3));
-// const operationTestArray4 = [];
-// console.log(operate(operationTestArray4));
-// console.log(operate("3+"));
 
 // ----------------- EXTRA FUNCTIONS ------------------------------------
 
